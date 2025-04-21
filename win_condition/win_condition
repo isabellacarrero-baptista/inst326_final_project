@@ -59,7 +59,7 @@ def deck():
 #It deals cards to player until it reaches the limit and then it moves on to the
 #next pile 
 
-#while the number of cards in a specified pile is less than a specified number, 
+#While the number of cards in a specified pile is less than a specified number, 
 #it will pop the first card out of the deck and append it to the specified pile
 #until it reaches the specified limit
 def deal_cards(deck):
@@ -84,8 +84,8 @@ def deal_cards(deck):
         
         
 def clear_all_piles(player):
-#Iterates over each pile in the player dict, then clears it, removing evrything
-# in the pile. This is used for testing 
+#Iterates over each pile in the player dict, then clears it, removing everything
+#in the pile. This is used for testing 
     for pile in player:
         player[pile].clear()
     print("All piles have been cleared.")
@@ -104,23 +104,23 @@ def win_condition(player):
 
 
 if __name__ == "__main__":
-#calls deck() to create the deck, then deals then to the two players 
+#calls deck() to create the deck, then deals them to the two players 
     game_deck = deck()
     deal_cards(game_deck)
 
 #Uncomment to choose which player you want cleared, used to declare winner
 
-    clear_all_piles(player1)
-    #clear_all_piles(player2)
+    #clear_all_piles(player1)
+    clear_all_piles(player2)
     
 #prints the deck for each player 
     print("Player 1 piles:")
-    for key in player1:
-        print(f"{key}: {player1[key]}")
+    for pile in player1:
+        print(f"{pile}: {player1[pile]}")
     
     print("\nPlayer 2 piles:")
-    for key in player2:
-        print(f"{key}: {player2[key]}")
+    for pile in player2:
+        print(f"{pile}: {player2[pile]}")
         
     #choose which player you want to check (player1 or player2)
     print("\n")
