@@ -73,7 +73,7 @@ def playable_cards(spit_piles, faceup_cards, top_spitcard):
                     legal_plays_dict[key] = []
                 legal_plays_dict[key].append(spit_index + 1)
                 
-    #raises an error telling the player they can't place a card there
+    #raises an error telling the player they can't place a card there 
     if not legal_plays_dict:
         raise Exception("That is an invalid play!")
                     
