@@ -1,0 +1,127 @@
+import random
+
+#Contains all the requirements to create the deck of cards 
+suits = [
+    'Hearts',
+    'Diamonds',
+    'Clubs',
+    'Spades'
+    ]
+
+ranks = [
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    'Jack',
+    'Queen',
+    'King',
+    'Ace'
+    ]
+
+#Initialize player1 and player2 piles
+player1 = {
+    "pile1": [],
+    "pile2": [],
+    "pile3": [],
+    "pile4": [],
+    "pile5": []
+}
+
+player2 = {
+    "pile1": [],
+    "pile2": [],
+    "pile3": [],
+    "pile4": [],
+    "pile5": []
+}
+
+#creates a deck by combining each suit and rank combination in a tuple, this 
+#results in 52 cards that are then shuffled
+
+def deck():
+    deck = []
+    for rank in ranks:
+        for suit in suits:
+            card_tuple = rank, suit
+            deck.append(card_tuple)
+          
+    random.shuffle(deck)
+    return deck
+
+
+#Deals the cards to each pile, 1 card for pile1, 2 cards for pile2 and so on 
+#It deals cards to player until it reaches the limit and then it moves on to the
+#next pile 
+
+#While the number of cards in a specified pile is less than a specified number, 
+#it will pop the first card out of the deck and append it to the specified pile
+#until it reaches the specified limit
+def deal_cards(deck):
+    player1["pile1"].append(deck.pop())
+    player2["pile1"].append(deck.pop())
+    
+    while len(player2["pile2"]) < 2: 
+        player1["pile2"].append(deck.pop())
+        player2["pile2"].append(deck.pop())
+        
+    while len(player2["pile3"]) < 3:
+        player1["pile3"].append(deck.pop())
+        player2["pile3"].append(deck.pop())
+    
+    while len(player2["pile4"]) < 4:
+        player1["pile4"].append(deck.pop())
+        player2["pile4"].append(deck.pop())
+    
+    while len(player2["pile5"]) < 5:
+        player1["pile5"].append(deck.pop())
+        player2["pile5"].append(deck.pop())
+        
+        
+def clear_all_piles(player):
+#Iterates over each pile in the player dict, then clears it, removing everything
+#in the pile. This is used for testing 
+    for pile in player:
+        player[pile].clear()
+    print("All piles have been cleared.")
+    
+    
+
+def win_condition(player):
+#Iterates over every card in the player.values(), if the pile has a cards it 
+#returns False, by default it returns True
+    for cards in player.values():
+        if cards:
+            print("You are not the winner!")
+            return False 
+    print("You are the winner!")
+    return True
+
+
+if __name__ == "__main__":
+#calls deck() to create the deck, then deals them to the two players 
+    game_deck = deck()
+    deal_cards(game_deck)
+
+#Uncomment to choose which player you want cleared, used to declare winner
+
+    #clear_all_piles(player1)
+    clear_all_piles(player2)
+    
+#prints the deck for each player 
+    print("Player 1 piles:")
+    for pile in player1:
+        print(f"{pile}: {player1[pile]}")
+    
+    print("\nPlayer 2 piles:")
+    for pile in player2:
+        print(f"{pile}: {player2[pile]}")
+        
+    #choose which player you want to check (player1 or player2)
+    print("\n")
+    print(win_condition(player2))
