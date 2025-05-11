@@ -97,10 +97,65 @@ class Player:
             print("\n")
         unicode_spit_pile= [str(card) for card in self.spit_pile["pile"]]
         print(f"Spit Pile: {unicode_spit_pile}")  #Prints from spit pile
-                
         
+   
+    #face_up_cards method
+    
+    
+    #Isabella code for Player class:
+    
+    def card_playable(self, card, center_spitpile_card):
+        return (
+            abs(card.value() - center_spitpile_card.value()) == 1 or
+            (card.value() == 1 and center_spitpile_card.value() == 13) or 
+            (card.value() == 13 and center_spitpile_card.value() == 1)
+        )
+        
+            
+    def legal_plays(self, center_spit_piles):
+        legal_plays_dict = {}
+        
+        #calls method for face-up cards        
+        face_up = self.face_up_cards()
 
-
+        for pile_name, card in face_up.items():
+            for index, center_pile in enumerate(center_spit_piles):
+                center_card = center_pile[-1] if center_pile else None 
+                if self.card_playable(card, center_card):
+                    if pile_name not in legal_plays_dict:
+                        legal_plays_dict[pile_name] = []
+                    legal_plays_dict[pile_name].append(index + 1)
+                    
+                    
+        if self.spit_pile["pile"]:
+            top_spit_card = self.spit_pile["pile"][-1]
+            for index, center_pile in enumerate(center_spit_piles):
+                center_card = center_pile[-1] if center_pile else None 
+                if self.card_playable(top_spit_card, center_card):
+                    if "spit" not in legal_plays_dict:
+                        legal_plays_dict["spit"] = []
+                    legal_plays_dict["spit"].append(index + 1) 
+                    
+        return legal_plays_dict
+    
+    def card_to_center(self, center_piles):
+        face_up = self.face_up_cards()
+      
+        for pile, card in face_up.items():
+            for index in range(len(center_piles)):
+                if self.card_playable(card, center_piles[index][-1]):
+                    print(f"{self.name} plays {card} from {pile} to center pile" 
+                          f"{index + 1}")
+                    center_piles[index].append(self.player_pile(pile).pop())
+                    #calls flip_next_card method 
+                    self.flip_next_card(pile)
+                    return True
+        return False 
+    
+    #flip_next_card method 
+    
+    
+                        
 
 
 
