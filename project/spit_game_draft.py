@@ -105,11 +105,21 @@ class Player:
     #Isabella code for Player class:
     
     def card_playable(self, card, center_spitpile_card):
+        """_summary_ 
+        Uses conditional expression 
+
+        Args:
+            card (_type_): _description_
+            center_spitpile_card (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         return (
             abs(card.value() - center_spitpile_card.value()) == 1 or
             (card.value() == 1 and center_spitpile_card.value() == 13) or 
             (card.value() == 13 and center_spitpile_card.value() == 1)
-        )
+        ) if center_spitpile_card else False 
         
             
     def legal_plays(self, center_spit_piles):
