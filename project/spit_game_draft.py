@@ -115,7 +115,6 @@ class Player:
     def legal_plays(self, center_spit_piles):
         """_summary_
         Uses fstring technique
-        Uses composition
 
         Args:
             center_spit_piles (_type_): _description_
