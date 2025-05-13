@@ -109,14 +109,33 @@ class Player:
     #Isabella code for Player class:
     
     def card_playable(self, card, center_spitpile_card):
+        """_summary_ 
+        Uses conditional expression 
+
+        Args:
+            card (_type_): _description_
+            center_spitpile_card (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         return (
             abs(card.value() - center_spitpile_card.value()) == 1 or
             (card.value() == 1 and center_spitpile_card.value() == 13) or 
             (card.value() == 13 and center_spitpile_card.value() == 1)
-        )
+        ) if center_spitpile_card else False 
         
             
     def legal_plays(self, center_spit_piles):
+        """_summary_
+        Uses fstring technique
+
+        Args:
+            center_spit_piles (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         legal_plays_dict = {}
         
         #calls method for face-up cards        
@@ -164,7 +183,72 @@ class Player:
         print(f"Next Cards: {next_cards}")
         
                         
-
+def main():
+    deck = Deck()
+    deck.shuffle()
+    
+    player1 = input("Enter a name for Player 1: ")
+    player1 = Player(player1)
+    
+    player2 = input("Enter a name for Player 2: ")
+    player2 = Player(player2)
+    
+    deck.deal_cards(player1)
+    deck.deal_cards(player2)
+    spit_piles = {
+        "pile1": [],
+        "pile2": []
+    }
+    spit_piles["pile1"].append(player1.spit_pile["pile"].pop())
+    spit_piles["pile2"].append(player2.spit_pile["pile"].pop())
+    
+    turn = 0
+    
+    while True:
+        if turn % 2 == 0:
+            player_turn = player1
+            print(f"{player1}'s turn!")
+        else:
+            player_turn = player2
+            print(f"{player2}'s turn!")
+        
+        
+        player_turn.show_player_unicode_piles()
+        try:
+            action = input("Choose an action: \
+                'play' a card, 'slap', or 'skip': ")
+            action = action.lower()
+            if action == "play":
+                player_turn.legal_plays()
+                pile_choice = input("Pick a pile to play from: ")
+                card_choice = input("Pick a card to play: ")
+                if player_turn.card_playable(card_choice, pile_choice):
+                    spit_piles[pile_choice].append(player_turn.player_pile\
+                                                   [card_choice].pop())
+                    #Check that last one lowk
+            elif action == "slap":
+                if sum(len(pile) for pile in player_turn.values()) == 0:
+                    print("Pick a pile to slap: ")
+                    print(len(spit_piles["pile1"]))
+                    print(len(spit_piles["pile2"]))
+                    pile_choice = input("Choose a pile (1 or 2): ")
+                    if pile_choice == "1":
+                        # make player's cards the slappe pile, other player's
+                        # cards the otherpile
+            elif action == "skip":
+                print("Skipping turn.")
+        except ValueError:
+            print("Invalid input. Please try again.")
+            continue
+            
+        player1_total = sum(len(pile) for pile in player1.values())
+        player2_total = sum(len(pile) for pile in player2.values())
+       # if player1_total <= 15:
+           # change_gamestate(player1)
+       # if player2_total <= 15:
+           # change_gamestate(player2)
+        # Revise change_gamestate
+        turn += 1
 
 
 
