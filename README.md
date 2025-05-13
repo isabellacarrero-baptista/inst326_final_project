@@ -1,4 +1,20 @@
-Function: card_playable, Author: Isabella, Technique:conditional expression
-card_playable          Isabella          conditional expression
-card_to_center         Isabella          f-string
-__repr__               Josue             magic method other than __init__
+Function: card_playable
+
+Author: Isabella
+
+Technique: conditional expression
+
+
+Function: card_to_center
+
+Author: Isabella
+
+Technique: f-string
+
+
+Function: __ repr __ 
+
+Author: Josue
+
+Technique: magic method other than __ init __
+
