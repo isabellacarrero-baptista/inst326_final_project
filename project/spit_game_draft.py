@@ -193,6 +193,16 @@ class Player:
             next_cards.append(self.player_piles[piles].cards.pop(0))
         print(f"Next Cards: {next_cards}")
         
+    #win method
+    def win_condition(player):
+        for cards in player.values():
+            if cards:
+                print("You are not the winner!")
+                return False 
+            else:
+                print("You are the winner!")
+                return True
+        
                         
 def main():
     deck = Deck()
