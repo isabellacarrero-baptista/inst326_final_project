@@ -83,6 +83,13 @@ class Player:
                 "pile5": []
                 }
         self.spit_pile = {"pile": []}
+
+    def values(self):
+        all_cards = []
+        for pile in self.player_pile.values():
+            all_cards.extend(pile)
+        all_cards.extend(self.spit_pile["pile"])
+        return all_cards
         
     def show_player_piles(player):
         for (name, pile) in player.player_pile.items():
@@ -228,48 +235,73 @@ def main():
     while True:
         if turn % 2 == 0:
             player_turn = player1
-            print(f"{player1}'s turn!")
+            other_player = player2
+            print('\n')
+            print(f"{player1.name}'s turn!")
         else:
             player_turn = player2
-            print(f"{player2}'s turn!")
+            other_player = player1
+            print('\n')
+            print(f"{player2.name}'s turn!")
         
         
         player_turn.show_player_unicode_piles()
+        print('\n')
+        print(f"Middle spit pile 1: {spit_piles["pile1"]}")
+        print(f"Middlepit pile 2: {spit_piles["pile2"]}")
+        print('\n')
         try:
-            action = input("Choose an action: \
-                'play' a card, 'slap', or 'skip': ")
+            action = input("Choose an action: 'play', 'slap', or 'skip': ")
             action = action.lower()
             if action == "play":
-                player_turn.legal_plays()
-                pile_choice = input("Pick a pile to play from: ")
-                card_choice = input("Pick a card to play: ")
+                legal_moves = player_turn.legal_plays(list(spit_piles.values()))
+                print(f"Legal moves: {legal_moves}")
+                pile_choice = input("Pick a pile to play from (1-2): ")
+                card_choice = input("Pick a card to play (1-5): ")
                 if player_turn.card_playable(card_choice, pile_choice):
                     spit_piles[pile_choice].append(player_turn.player_pile\
                                                    [card_choice].pop())
                     #Check that last one lowk
             elif action == "slap":
-                if sum(len(pile) for pile in player_turn.values()) == 0:
+                if len(player_turn.values()) == 0:
                     print("Pick a pile to slap: ")
                     print(len(spit_piles["pile1"]))
                     print(len(spit_piles["pile2"]))
                     pile_choice = input("Choose a pile (1 or 2): ")
                     if pile_choice == "1":
-                        # make player's cards the slappe pile, other player's
-                        # cards the otherpile
+                        deck.cards.extend(spit_piles["pile1"])
+                        deck.deal_cards(player_turn)
+                        deck.cards.extend(spit_piles["pile2"])
+                        deck.deal_cards(other_player)
+                    elif pile_choice == "2":
+                        deck.cards.extend(spit_piles["pile2"])
+                        deck.deal_cards(player_turn)
+                        deck.cards.extend(spit_piles["pile1"])
+                        deck.deal_cards(other_player)
+                else:
+                    print("You cannot slap now.")
+                    continue
             elif action == "skip":
                 print("Skipping turn.")
+            else:
+                raise ValueError
         except ValueError:
-            print("Invalid input. Please try again.")
+            print("Invalid action. Please type 'play', 'slap', or 'skip'.")
             continue
             
-        player1_total = sum(len(pile) for pile in player1.values())
-        player2_total = sum(len(pile) for pile in player2.values())
-       # if player1_total <= 15:
-           # change_gamestate(player1)
-       # if player2_total <= 15:
-           # change_gamestate(player2)
+        #if len(player_turn.values()) <= 15:
+           # change_gamestate(player_turn)
+        #if len(other_player.values()) <= 15:
+            #change_gamestate(other_player)
         # Revise change_gamestate
         turn += 1
+    
+                    
+
+    
+    
+if __name__ == "__main__":
+    main()
 
 
 
