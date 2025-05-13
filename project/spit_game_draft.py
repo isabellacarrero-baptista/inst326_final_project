@@ -109,15 +109,15 @@ class Player:
     #Isabella code for Player class:
     
     def card_playable(self, card, center_spitpile_card):
-        """_summary_ 
-        Uses conditional expression 
+        """Checks if the card can be played on the center spit pile. 
+        Uses conditional expression technique. 
 
         Args:
-            card (_type_): _description_
-            center_spitpile_card (_type_): _description_
+            card (Card): The player's card that can be played.
+            center_spitpile_card (Card): The top card on the center spit pile.
 
         Returns:
-            _type_: _description_
+            bool: True if the card can be played, False if it can't.
         """
         return (
             abs(card.value() - center_spitpile_card.value()) == 1 or
@@ -127,14 +127,15 @@ class Player:
         
             
     def legal_plays(self, center_spit_piles):
-        """_summary_
-        Uses fstring technique
+        """All the legal moves a player can make. Checks the player's cards 
+        against the center spit piles.
 
         Args:
-            center_spit_piles (_type_): _description_
+            center_spit_piles (list): A list of two lists for each center spit
+            pile.
 
         Returns:
-            _type_: _description_
+            dictionary: dictionary of legal plays.
         """
         legal_plays_dict = {}
         
@@ -162,6 +163,16 @@ class Player:
         return legal_plays_dict
     
     def card_to_center(self, center_piles):
+        """Attempts to play one legal card to a center spit pile.
+        Uses f-sting technique.
+
+        Args:
+            center_piles (list): A list of two lists for each center spit
+            pile.
+
+        Returns:
+            bool: True if a card was played, False if it wasn't.
+        """
         face_up = self.face_up_cards()
       
         for pile, card in face_up.items():
