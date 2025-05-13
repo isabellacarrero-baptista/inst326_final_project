@@ -99,8 +99,12 @@ class Player:
         print(f"Spit Pile: {unicode_spit_pile}")  #Prints from spit pile
         
    
-    #face_up_cards method
-    
+    #face_up_cards method Hong
+    def face_up_cards(self):
+        face_up_cards = []
+        for piles in self.player_piles:
+            face_up_cards.append(self.player_piles[piles].cards.pop(0))
+        print(f"Face Up Cards: {face_up_cards}")
     
     #Isabella code for Player class:
     
@@ -152,9 +156,13 @@ class Player:
                     return True
         return False 
     
-    #flip_next_card method 
-    
-    
+    #flip_next_card method Hong
+    def flip_next_card(self):
+        next_cards = []
+        for piles in self.player_piles:
+            next_cards.append(self.player_piles[piles].cards.pop(0))
+        print(f"Next Cards: {next_cards}")
+        
                         
 
 
