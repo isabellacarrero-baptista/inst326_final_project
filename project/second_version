@@ -328,7 +328,8 @@ def main(player1, player2):
         if player_turn.legal_plays(list(spit_piles.values())) == False \
                     and other_player.legal_plays(list(spit_piles.values())) == False:
                     print("Neither player has a legal play, pulling from your spit pile.")
-                    spit_piles["pile1"].append(other_player.spit_pile["pile"].pop())    
+                    spit_piles["pile1"].append(player_turn.spit_pile["pile"].pop())
+                    spit_piles["pile2"].append(other_player.spit_pile["pile"].pop())    
         #if len(player_turn.all_values()) <= 15:
            # change_gamestate(player_turn)
         #if len(other_player.all_values()) <= 15:
