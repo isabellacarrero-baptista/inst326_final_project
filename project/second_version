@@ -9,23 +9,52 @@ with open('cards.json', 'r') as file:
     cards_data = json.load(file)
 
 class Card:
+    """Represents a playing card.
+    
+    Author: Josue Miguel
+
+    Attributes:
+        rank (str): The rank of the card (e.g., "Ace", "2", "King").
+        suit (str): The suit of the card (e.g., "Spades", "Hearts", ect)
+    """
     rank_values = cards_data["ranks"]  
 
 
     def __init__(self, rank, suit):
+        """Initializes a Card object with a rank and a suit.
+
+        Args:
+            rank (str): The rank of the card.
+            suit (str): The suit of the card.
+        """
         self.rank = rank
         self.suit = suit
 
 
     def __repr__(self):
+        """Returns a string representation of the card.
+
+        Returns:
+            str: A string in the format 'rank of suit' (e.g., 'Ace of Spades').
+        """
         return f"{self.rank} of {self.suit}"
 
 
     def value(self):
+        """Returns the numerical value of the card based on its rank.
+
+        Returns:
+            int: The numerical value of the card (e.g., 'Ace' it would return 1)
+        """
         return Card.rank_values[self.rank]
 
 
     def __str__(self):
+        """Returns a string representation of the card with suit symbols.
+
+        Returns:
+            str: A string in the format with suit symbols (e.g., 'Ace of ♠')
+        """
         suit_symbols = {
             "Spades": "\u2660",     # ♠
             "Hearts": "\u2665",     # ♥
@@ -36,27 +65,63 @@ class Card:
 
 
 class Deck:
+    """Represents a deck of playing cards.
+    
+    Author: Josue Miguel
+
+    Attributes:
+        cards (list): A list of Card objects representing a full deck.
+    """
     def __init__(self):
+        """Initializes the deck and creates it with 52 cards"""
         self.cards = []
         for rank in cards_data["ranks"]:
             for suit in cards_data["suits"]:
                 self.cards.append(Card(rank, suit))
 
     def show(self):
+        """Displays all the cards in the deck."""
         for card in self.cards:
             print(card)
 
     def shuffle(self):
+        """Shuffles the cards in the deck."""
         random.shuffle(self.cards)
         
     def deck_length(self, player):
+        """Calculates the total number of cards held by the player.
+
+        Args:
+            player (Player): The player whose piles are to be counted.
+
+        Returns:
+            int: The total number of cards in the player's piles.
+        """
         return sum(len(pile) for pile in player.player_pile.values())
     
     def spit_pile_length(self,player):
+        """Calculates the number of cards in the player's spit pile.
+
+        Args:
+            player (Player): The player whose spit pile is to be counted.
+
+        Returns:
+            int: The number of cards in the player's spit pile.
+        """
         for pile in player.spit_pile.values():
             return len(pile)
 
     def deal_cards(self, player):
+        """Deals cards to the player, distributing them across five piles.
+        Each pile will contain the cards asscosated with their number
+        For example: 1 card for pile 1
+                     2 cards for pile 2
+                     3 cards for pile 3
+                     4 cards for pile 4
+                     5 cards for pile 5
+        Args:
+            player (Player): The player to whom the cards are being dealt.
+        """
         while len(player.player_pile["pile1"]) < 1:
             player.player_pile["pile1"].append(self.cards.pop())
 
