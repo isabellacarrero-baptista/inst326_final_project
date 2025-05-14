@@ -10,7 +10,7 @@ with open('cards.json', 'r') as file:
 
 class Card:
     """Represents a playing card.
-    
+
     Author: Josue Miguel
 
     Attributes:
@@ -29,7 +29,6 @@ class Card:
         self.rank = rank
         self.suit = suit
 
-
     def __repr__(self):
         """Returns a string representation of the card.
 
@@ -38,7 +37,6 @@ class Card:
         """
         return f"{self.rank} of {self.suit}"
 
-
     def value(self):
         """Returns the numerical value of the card based on its rank.
 
@@ -46,7 +44,6 @@ class Card:
             int: The numerical value of the card (e.g., 'Ace' it would return 1)
         """
         return Card.rank_values[self.rank]
-
 
     def __str__(self):
         """Returns a string representation of the card with suit symbols.
@@ -62,10 +59,9 @@ class Card:
         }
         return f"{self.rank}{suit_symbols[self.suit]}"
 
-
 class Deck:
     """Represents a deck of playing cards.
-    
+
     Author: Josue Miguel
 
     Attributes:
@@ -98,7 +94,7 @@ class Deck:
         """
         return sum(len(pile) for pile in player.player_pile.values())
     
-    def spit_pile_length(self,player):
+    def spit_pile_length(self, player):
         """Calculates the number of cards in the player's spit pile.
 
         Args:
@@ -112,7 +108,7 @@ class Deck:
 
     def deal_cards(self, player):
         """Deals cards to the player, distributing them across five piles.
-        Each pile will contain the cards asscosated with their number
+        Each pile will contain the cards associated with their number
         For example: 1 card for pile 1
                      2 cards for pile 2
                      3 cards for pile 3
@@ -138,23 +134,17 @@ class Deck:
            
         while len(player.spit_pile["pile"]) < 11:
             player.spit_pile["pile"].append(self.cards.pop())
-            
+
 class Player:
     def __init__(self, name):
-        """Initializes a Player object with a name and empty piles.
-        Author: Josue Miguel
-
-        Args:
-            name (str): The name of the player.
-        """
         self.name = name
         self.player_pile = {
-                "pile1": [],
-                "pile2": [],
-                "pile3": [],
-                "pile4": [],
-                "pile5": []
-                }
+            "pile1": [],
+            "pile2": [],
+            "pile3": [],
+            "pile4": [],
+            "pile5": []
+        }
         self.spit_pile = {"pile": []}
 
     def values(self):
@@ -169,40 +159,21 @@ class Player:
         all_cards.extend(self.spit_pile["pile"])
         return all_cards
 
-        
-    def show_player_piles(player):
-        """Displays the top card of each pile and the spit pile, if not empty.
-        
-        Author: Josue Miguel
-
-        This method prints the top card of each of the five player piles and the
-        spit pile, displaying only the most recent card from each pile.
-        """
-        for (name, pile) in player.player_pile.items():
-            print(f"{name}: {pile}") #Prints cards from 5 piles
-            print("\n")
-        print(f"Spit Pile: {player.spit_pile['pile']}") #Prints from spit pile
-        
-    def show_player_unicode_piles(self):
-        """Displays the top card of each pile and the spit pile using Unicode 
-           symbols, if not empty.
-        
-        Author: Josue Miguel
-
-        This method prints the top card of each of the five player piles and the
-        spit pile, displaying only the most recent card using Unicode 
-        representations of the cards.
-        """
+    def show_player_piles(self):
         for (name, pile) in self.player_pile.items():
-            unicode_cards = [str(card) for card in pile]  #Uses the __str__ 
-            print(f"{name}: {unicode_cards}") #Prints cards from 5 piles
-        unicode_spit_pile= [str(card) for card in self.spit_pile["pile"]]
-        print(f"Spit Pile: {unicode_spit_pile}")  #Prints from spit pile
-        
-   
-    #face_up_cards method
+            print(f"{name}: {pile}")  # Prints cards from 5 piles
+            print("\n")
+        print(f"Spit Pile: {self.spit_pile['pile']}")  # Prints from spit pile
+
+    def show_player_unicode_piles(self):
+        for (name, pile) in self.player_pile.items():
+            unicode_cards = [str(card) for card in pile]  # Uses the __str__ 
+            print(f"{name}: {unicode_cards}")  # Prints cards from 5 piles
+        unicode_spit_pile = [str(card) for card in self.spit_pile["pile"]]
+        print(f"Spit Pile: {unicode_spit_pile}")  # Prints from spit pile
+
     def face_up_cards(self):
-        """Gets the face-up card from from the player pile and spit pile.
+        """Gets the face-up card from the player pile and spit pile.
 
         Returns:
             dict: A dictionary mapping pile names to the top card in each pile.  
@@ -214,9 +185,7 @@ class Player:
         if self.spit_pile["pile"]:
             face_up["spit"] = self.spit_pile["pile"][-1]
         return face_up
-    
-    #Isabella code for Player class:
-    
+
     def card_playable(self, card, center_spitpile_card):
         """Checks if the card can be played on the center spit pile. 
         Uses conditional expression technique. 
@@ -234,7 +203,6 @@ class Player:
             (card.value() == 13 and center_spitpile_card.value() == 1)
         )
         
-            
     def legal_plays(self, center_spit_piles):
         """All the legal moves a player can make. Checks the player's cards 
         against the center spit piles.
@@ -278,13 +246,11 @@ class Player:
                 if self.card_playable(card, center_piles[index][-1]):
                     print(f"{self.name} plays {card} from {pile} to center pile" 
                           f"{index + 1}")
-                    center_piles[index].append(self.player_pile(pile).pop())
-                    #calls flip_next_card method 
+                    center_piles[index].append(self.player_pile[pile].pop())
                     self.flip_next_card(pile)
                     return True
         return False 
-    
-    #flip_next_card method 
+
     def flip_next_card(self):
         next_cards = []
         for pile_name, pile in self.player_pile.items():
@@ -311,282 +277,86 @@ class Player:
         
         print("You are the winner!")
         return True
-    
-        
+
 def move_empty_pile(player):
     """Moves a pile over to an empty pile.
 
     Args:
-        player (class): Either player 1 or 2
-
-    Raises:
-        TypeError: If there is not an empty pile
-        IndexError: Pile choice is under 1 or over 5
-        ValueError: Pile is empty
+        player (Player): the player moving the pile.
     """
-    response = input("Do you want to move a card to a empty pile? [y/n] ")
-    response = response.lower()
-    check_empty = []
-    is_empty = False
-    if response == "yes" or response == "y":
-        for pile in player.player_pile: #check if piles are empty
-            if player.player_pile[pile] == []:
-                is_empty = True
-            check_empty.append(True) if player[pile] == empty \
-                else check_empty.append(False)
-        
-        if not is_empty == True: #there is not an empty pile
-            raise TypeError("There must be a empty pile.")
-        else:
-            try:
-                pile_choice = int(input(f"Which card do you want to move? "
-                                    "Name the pile from 1 to 5."))
-                if pile_choice < 1 and pile_choice > 5:
-                    raise IndexError
-                elif check_empty[pile_choice-1] == True: #pile is empty
-                    raise ValueError    
-            except IndexError:
-                print("Please enter a corresponding pile between 1 to 5.")
-                pile_choice = input()
-            except ValueError:
-                print("Please enter a valid pile.")
-            else: 
-                added_to_empty = False
-                pile_choice = pile_choice - 1
-                keys_list = list(player.keys())
-                popping_pile = keys_list[pile_choice]
-                popped_card = player[popping_pile].pop()
-                
-                for pile in check_empty:
-                    #update popped card to first empty pile
-                    if added_to_empty == False and pile == True:
-                        player[popping_pile].append(popped_card)
-                        added_to_empty = True
-                                      
-    else: #response == no
-        pass
-    
-def main(player1, player2):
-    """Runs the main part of the code.
+    for pile_name, pile in player.player_pile.items():
+        if not pile:
+            next_pile = f"pile{len(player.player_pile) + 1}"
+            print(f"Moving {pile_name} over to {next_pile}")
+            player.player_pile[next_pile] = pile
+
+def game_statistics(player1, player2):
+    """Prints the statistics of the game play.
 
     Args:
-        player1 (class): Player 1
-        player2 (class): Player 2
-
-    Raises:
-        ValueError: For invalid actions other than 'play', 'slap', 'skip'.
+        player1 (Player): the first player in the game.
+        player2 (Player): the second player in the game.
     """
-    deck = Deck()
-    deck.shuffle()
-    Player(player1)
-    Player(player2)
+    print(f"{player1.name}'s Remaining Cards: {player1.deck_length(player1)} cards.")
+    print(f"{player2.name}'s Remaining Cards: {player2.deck_length(player2)} cards.")
+
+def card_action(action):
+    """Returns a simple action for the cards.
+
+    Args:
+        action (str): the type of action requested by the user.
+    """
+    action_list = {
+        "help": "\n  Help: Move your card", 
+        "stats": "\n  Stats: Show player stats",
+        "play": "\n  Play a card", 
+        "flip": "\n  Flip the next card in pile",
+        "exit": "\n  Exit: End the game"
+    }
     
+    return action_list.get(action.lower(), "Invalid action!")
+
+def main():
+    """Main function to drive the game logic."""
+
+    # Command-line argument parsing.
+    parser = ArgumentParser()
+    parser.add_argument("--deck", action="store_true", help="Show full deck")
+    parser.add_argument("--name", type=str, required=True, help="Player name")
+    parser.add_argument("--opponent", type=str, required=True, help="Opponent name")
+    parser.add_argument("--action", type=str, help="Action to be executed")
+    
+    args = parser.parse_args()
+
+    # Initialize the game and the deck
+    deck = Deck()
+
+    player1 = Player(args.name)
+    player2 = Player(args.opponent)
+
+    # Deal cards
     deck.deal_cards(player1)
     deck.deal_cards(player2)
-    spit_piles = {
-        "pile1": [],
-        "pile2": []
-    }
-    spit_piles["pile1"].append(player1.spit_pile["pile"].pop())
-    spit_piles["pile2"].append(player2.spit_pile["pile"].pop())
-    
-    turn = 0
-    
-    while True:
-        if turn % 2 == 0:
-            player_turn = player1
-            other_player = player2
-            print('\n')
-            print(f"{player1.name}'s turn!")
+
+    # Show full deck if requested
+    if args.deck:
+        deck.show()
+
+    # Game loop
+    print(f"{player1.name} vs {player2.name}")
+    game_active = True
+    while game_active:
+        action = input(f"Choose an action ({player1.name}): ")
+        if action.lower() == "exit":
+            print("Exiting the game.")
+            break
+        elif action.lower() == "help":
+            print(card_action("help"))
+        elif action.lower() == "stats":
+            game_statistics(player1, player2)
+        elif action.lower() == "play":
+            player1.card_to_center([player2.spit_pile["pile"]])
+        elif action.lower() == "flip":
+            player1.flip_next_card("")
         else:
-            player_turn = player2
-            other_player = player1
-            print('\n')
-            print(f"{player2.name}'s turn!")
-        
-        
-        player_turn.show_player_unicode_piles()
-        print('\n')
-        if spit_piles['pile1']:
-            print(f"Middle spit pile 1: {spit_piles['pile1'][-1]}")  # Top card of pile1
-        if spit_piles['pile2']:
-            print(f"Middle spit pile 2: {spit_piles['pile2'][-1]}")  # Top card of pile2
-        print('\n')
-            action = input("Choose an action: 'play', 'slap', or 'skip': ")
-            action = action.lower()
-            
-            if action == "play":
-                legal_moves = player_turn.legal_plays(list(spit_piles.values()))
-                print(f"Legal moves: {legal_moves}")
-
-                card_choice = input("Choose the card pile to play from (1-5): ")
-                pile_choice = input("Choose the center spit pile to play to (1 or 2): ")
-
-                pile_key = f"pile{card_choice}"
-                
-                if pile_key not in legal_moves:
-                    print("That pile has no legal plays.")
-                    continue
-
-                if not pile_choice.isdigit() or int(pile_choice) not in legal_moves[pile_key]:
-                    print("That move is not allowed to the selected center pile.")
-                    continue
-                
-                #elif legal_moves == None:
-                  #  print("Popping from spit pile.")
-                    
-
-                else:
-                    pile_name = f"pile{card_choice}"
-                    card = player_turn.player_pile[pile_name].pop()
-                    print(f"{player_turn.name} plays {card} from {pile_name} to center pile {pile_choice}")
-                    # optionally call player_turn.flip_next_card(pile_name) if needed
-
-                spit_piles[f"pile{pile_choice}"].append(card)
-
-            elif action == "slap":
-                if len(player_turn.all_values()) == 0:
-                    print("Pick a pile to slap: ")
-                    print(len(spit_piles["pile1"]))
-                    print(len(spit_piles["pile2"]))
-                    pile_choice = input("Choose a pile (1 or 2): ")
-                    if pile_choice == "1":
-                        deck.cards.extend(spit_piles["pile1"])
-                        deck.shuffle()
-                        deck.deal_cards(player_turn)
-                        deck.cards.extend(spit_piles["pile2"])
-                        deck.shuffle()
-                        deck.deal_cards(other_player)
-                    elif pile_choice == "2":
-                        deck.cards.extend(spit_piles["pile2"])
-                        deck.shuffle()
-                        deck.deal_cards(player_turn)
-                        deck.cards.extend(spit_piles["pile1"])
-                        deck.shuffle()
-                        deck.deal_cards(other_player)
-                else:
-                    print("You cannot slap now.")
-                    continue
-            elif action == "skip":
-                print("Skipping turn.")
-            else:
-                raise ValueError
-        except ValueError:
-            print("Invalid action. Please type 'play', 'slap', or 'skip'.")
-            continue
-        except TypeError:
-            continue
-        
-        for pile in player_turn.player_pile.values():
-            if len(pile) == 0:
-                print(f"Pile {player_turn.name} has no cards in the pile, moving card over")
-                move_empty_pile(player_turn)
-            else:
-                pass
-                
-        for pile in other_player.player_pile.values():
-            if len(pile) == 0:
-                print(f"Pile {other_player.name} has no cards in the pile, moving card over")
-                move_empty_pile(other_player)
-            else:
-                pass
-        
-        if player_turn.legal_plays(list(spit_piles.values())) == False \
-                    and other_player.legal_plays(list(spit_piles.values())) == False:
-                    print("Neither player has a legal play, pulling from your spit pile.")
-                    spit_piles["pile1"].append(player_turn.spit_pile["pile"].pop())
-                    spit_piles["pile2"].append(other_player.spit_pile["pile"].pop())    
-        #if len(player_turn.all_values()) <= 15:
-           # change_gamestate(player_turn)
-        #if len(other_player.all_values()) <= 15:
-            #change_gamestate(other_player)
-        # Revise change_gamestate
-        turn += 1
-    
-def title_screen():
-    """Title screen of split game.
-
-    Returns:
-        graph: Shows title screen 
-    """
-
-    #define figure and axis
-    fig, ax = plt.subplots()
-    ax.set_facecolor('green')
-    ax.set_xlim(0, 16)
-    ax.set_ylim(0, 8)
-
-    #add card to plot
-    card1 = Rectangle((1, 1), 2, 3, edgecolor='black', facecolor='white', linewidth=2)
-    card2 = Rectangle((4, 1), 2, 3, edgecolor='black', facecolor='white', linewidth=2)
-    card3 = Rectangle((7, 1), 2, 3, edgecolor='black', facecolor='white', linewidth=2)
-    card4 = Rectangle((10, 1), 2, 3, edgecolor='black', facecolor='white', linewidth=2)
-    card5 = Rectangle((13, 1), 2, 3, edgecolor='black', facecolor='white', linewidth=2)
-
-    title = Rectangle((6, 6), 4, 1.65, edgecolor='black', facecolor='white', linewidth=2)
-    team = Rectangle((2, 4.5), 4.5, 1.25, edgecolor='black', facecolor='black', linewidth=2)
-    members = Rectangle((9.5, 4.5), 4.5, 1.25, edgecolor='black', facecolor='red', linewidth=2)
-
-    ax.add_patch(card1)
-    ax.add_patch(card2)
-    ax.add_patch(card3)
-    ax.add_patch(card4)
-    ax.add_patch(card5)
-    ax.add_patch(title)
-    ax.add_patch(team)
-    ax.add_patch(members)
-
-    #texts of card num
-    card1_rank = '4'
-    card1_suit = '\u2663'
-    card2_rank = '7'
-    card2_suit = '\u2666'
-    card3_rank = 'Ace'
-    card3_suit = '\u2665'
-    card4_rank = '9'
-    card4_suit = '\u2660'
-    card5_rank = '11'
-    card5_suit = '\u2663'
-
-    #show texts
-    ax.text(2, 2.5, card1_rank + ' ' + card1_suit, horizontalalignment='center', verticalalignment='center')
-    ax.text(5, 2.5, card2_rank + ' ' + card2_suit, horizontalalignment='center', verticalalignment='center')
-    ax.text(8, 2.5, card3_rank + ' ' + card3_suit, horizontalalignment='center', verticalalignment='center')
-    ax.text(11, 2.5, card4_rank + ' ' + card4_suit, horizontalalignment='center', verticalalignment='center')
-    ax.text(14, 2.5, card5_rank + ' ' + card5_suit, horizontalalignment='center', verticalalignment='center')
-
-    ax.text(8, 6.75, 'Split', fontsize = 25, color = 'red', horizontalalignment='center', verticalalignment='center')
-    ax.text(3, 5.35, 'By', fontsize = 8, color = 'white', horizontalalignment='center', verticalalignment='center')
-    ax.text(4.25, 5, 'Saucy Syntax Squad', fontsize = 8, color = 'white', horizontalalignment='center', verticalalignment='center')
-    ax.text(11, 5.35, 'INST326', fontsize = 8, color = 'white', horizontalalignment='center', verticalalignment='center')
-    ax.text(11.25, 5, 'Isabella, Josue,', fontsize = 8, color = 'white', horizontalalignment='center', verticalalignment='center')
-    ax.text(12.35, 4.75, 'Ethan, Hong', fontsize = 8, color = 'white', horizontalalignment='center', verticalalignment='center')
-
-    ax.get_xaxis().set_visible(False)
-    ax.get_yaxis().set_visible(False)
-    return plt.show()                 
-
-def parse_args(arglist):
-    """Parse command-line arguments.
-    
-    Expect two player names as arguments.
-
-    Args:
-        arglist (list of str): arguments from the command line.
-    
-    Returns:
-        namespace: the parsed arguments, as a namespace.
-    """
-    parser = ArgumentParser()
-    parser.add_argument("--player1", default="Player 1", help="Name of player 1 (default: Player 1)")
-    parser.add_argument("--player2", default="Player 2", help="Name of player 2 (default: Player 2)")
-    return parser.parse_args(arglist)
-
- 
-    
-if __name__ == "__main__":
-    args = parse_args(sys.argv[1:])
-    player1 = Player(args.player1)
-    player2 = Player(args.player2)
-    title_screen()
-    main(player1, player2)
+            print("Invalid action!")
