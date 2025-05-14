@@ -114,7 +114,7 @@ class Player:
         """Gets the face-up card from from the player pile and spit pile.
 
         Returns:
-            dict: A dictionary mapping pile names to the top card in each pile. 
+            dict: A dictionary mapping pile names to the top card in each pile.  
         """
         face_up = {}
         for pile_name, pile in self.player_pile.items():
