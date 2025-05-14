@@ -162,8 +162,9 @@ class Player:
     def flip_next_card(self):
         next_cards = []
         for piles in self.player_pile:
-            next_cards.append(self.player_pile[piles].cards.pop(0))
+            next_cards.append(self.player_pile[piles].cards.pop())
         print(f"Next Cards: {next_cards}")
+    
         
 def move_empty_pile(player):
     response = input("Do you want to move a card to a empty pile? [y/n] ")
@@ -175,8 +176,8 @@ def move_empty_pile(player):
             if player.player_pile[pile] == []:
                 check_empty.append(True)
                 is_empty = True
-            else:
-                check_empty.append(False)
+            check_empty.append(True) if player[pile] == empty \
+                else check_empty.append(False)
         
         if not is_empty == True: #there is not an empty pile
             raise TypeError("There must be a empty pile.")
@@ -327,7 +328,8 @@ def main(player1, player2):
         if player_turn.legal_plays(list(spit_piles.values())) == False \
                     and other_player.legal_plays(list(spit_piles.values())) == False:
                     print("Neither player has a legal play, pulling from your spit pile.")
-                    spit_piles["pile1"].append(other_player.spit_pile["pile"].pop())    
+                    spit_piles["pile1"].append(player_turn.spit_pile["pile"].pop())
+                    spit_piles["pile2"].append(other_player.spit_pile["pile"].pop())    
         #if len(player_turn.all_values()) <= 15:
            # change_gamestate(player_turn)
         #if len(other_player.all_values()) <= 15:
@@ -405,13 +407,15 @@ def parse_args(arglist):
         namespace: the parsed arguments, as a namespace.
     """
     parser = ArgumentParser()
-    parser.add_argument("names", nargs=2, help="Two player names required.")
+    parser.add_argument("--player1", default="Player 1", help="Name of player 1 (default: Player 1)")
+    parser.add_argument("--player2", default="Player 2", help="Name of player 2 (default: Player 2)")
     return parser.parse_args(arglist)
+
  
     
 if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
-    player1 = Player(args.names[0])
-    player2 = Player(args.names[1])
+    player1 = Player(args.player1)
+    player2 = Player(args.player2)
     title_screen()
     main(player1, player2)
