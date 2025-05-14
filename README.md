@@ -28,3 +28,5 @@ Make sure you are in `inst326_final_project\project`
 | ------ | --------------- | -------------- |
 | Hong | [Statology](https://www.statology.org/matplotlib-rectangle/) | How to make basic rectangles using pyplot
 | Hong | [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/) | Basics of Markdown
+|Isabella| [Spit rules video](https://www.youtube.com/watch?v=_Q2HuDtdkrY)| Screenshots for presentation
+|Isabella| [Spit rules](https://bicyclecards.com/how-to-play/spit)| Rules of spit

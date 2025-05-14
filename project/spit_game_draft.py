@@ -345,7 +345,7 @@ def title_screen():
     ax.text(11, 2.5, card4_rank + ' ' + card4_suit, horizontalalignment='center', verticalalignment='center')
     ax.text(14, 2.5, card5_rank + ' ' + card5_suit, horizontalalignment='center', verticalalignment='center')
 
-    ax.text(8, 6.75, 'Split', fontsize = 25, color = 'red', horizontalalignment='center', verticalalignment='center')
+    ax.text(8, 6.75, 'Spit', fontsize = 25, color = 'red', horizontalalignment='center', verticalalignment='center')
     ax.text(3, 5.35, 'By', fontsize = 8, color = 'white', horizontalalignment='center', verticalalignment='center')
     ax.text(4.25, 5, 'Saucy Syntax Squad', fontsize = 8, color = 'white', horizontalalignment='center', verticalalignment='center')
     ax.text(11, 5.35, 'INST326', fontsize = 8, color = 'white', horizontalalignment='center', verticalalignment='center')
