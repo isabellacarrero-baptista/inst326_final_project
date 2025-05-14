@@ -88,6 +88,11 @@ class Player:
         self.spit_pile = {"pile": []}
 
     def values(self):
+        '''Returns a list of all card values in the player's piles.
+
+        Returns:
+            list: A list of all card values in the player's piles.
+        '''
         all_cards = []
         for pile in self.player_pile.values():
             all_cards.extend(pile)
