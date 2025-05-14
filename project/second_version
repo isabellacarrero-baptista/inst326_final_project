@@ -171,13 +171,15 @@ def move_empty_pile(player):
     check_empty = []
     is_empty = False
     if response == "yes" or response == "y":
-        for pile in player: #check if piles are empty
-            empty = []
-            if player[pile] == empty:
+        for pile in player.player_pile: #check if piles are empty
+            if player.player_pile[pile] == []
                 check_empty.append(True)
                 is_empty = True
             else:
                 check_empty.append(False)
+
+        if not is_empty == True: #there is not an empty pile
+            raise TypeError("There must be a empty pile.")
         
         if not is_empty == True: #there is not an empty pile
             raise TypeError("There must be a empty pile.")
