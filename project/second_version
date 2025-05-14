@@ -218,6 +218,16 @@ class Player:
     
         
 def move_empty_pile(player):
+    """Moves a pile over to an empty pile.
+
+    Args:
+        player (class): Either player 1 or 2
+
+    Raises:
+        TypeError: If there is not an empty pile
+        IndexError: Pile choice is under 1 or over 5
+        ValueError: Pile is empty
+    """
     response = input("Do you want to move a card to a empty pile? [y/n] ")
     response = response.lower()
     check_empty = []
@@ -225,7 +235,6 @@ def move_empty_pile(player):
     if response == "yes" or response == "y":
         for pile in player.player_pile: #check if piles are empty
             if player.player_pile[pile] == []:
-                check_empty.append(True)
                 is_empty = True
             check_empty.append(True) if player[pile] == empty \
                 else check_empty.append(False)
@@ -262,6 +271,15 @@ def move_empty_pile(player):
         pass
     
 def main(player1, player2):
+    """Runs the main part of the code.
+
+    Args:
+        player1 (class): Player 1
+        player2 (class): Player 2
+
+    Raises:
+        ValueError: For invalid actions other than 'play', 'slap', 'skip'.
+    """
     deck = Deck()
     deck.shuffle()
     Player(player1)
@@ -389,6 +407,11 @@ def main(player1, player2):
         turn += 1
     
 def title_screen():
+    """Title screen of split game.
+
+    Returns:
+        graph: Shows title screen 
+    """
 
     #define figure and axis
     fig, ax = plt.subplots()
