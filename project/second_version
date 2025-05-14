@@ -405,13 +405,15 @@ def parse_args(arglist):
         namespace: the parsed arguments, as a namespace.
     """
     parser = ArgumentParser()
-    parser.add_argument("names", nargs=2, help="Two player names required.")
+    parser.add_argument("--player1", default="Player 1", help="Name of player 1 (default: Player 1)")
+    parser.add_argument("--player2", default="Player 2", help="Name of player 2 (default: Player 2)")
     return parser.parse_args(arglist)
+
  
     
 if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
-    player1 = Player(args.names[0])
-    player2 = Player(args.names[1])
+    player1 = Player(args.player1)
+    player2 = Player(args.player2)
     title_screen()
     main(player1, player2)
