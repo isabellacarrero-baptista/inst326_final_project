@@ -2,7 +2,8 @@ import random
 import json
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-
+from argparse import ArgumentParser
+import sys
 
 with open('cards.json', 'r') as file:
     cards_data = json.load(file)
@@ -171,9 +172,9 @@ def move_empty_pile(player):
     check_empty = []
     is_empty = False
     if response == "yes" or response == "y":
-        for pile in player: #check if piles are empty
-            empty = []
-            if player[pile] == empty:
+        for pile in player.player_pile: #check if piles are empty
+            if player.player_pile[pile] == []:
+                check_empty.append(True)
                 is_empty = True
             check_empty.append(True) if player[pile] == empty \
                 else check_empty.append(False)
@@ -209,15 +210,11 @@ def move_empty_pile(player):
     else: #response == no
         pass
     
-def main():
+def main(player1, player2):
     deck = Deck()
     deck.shuffle()
-    
-    player1 = input("Enter a name for Player 1: ")
-    player1 = Player(player1)
-    
-    player2 = input("Enter a name for Player 2: ")
-    player2 = Player(player2)
+    Player(player1)
+    Player(player2)
     
     deck.deal_cards(player1)
     deck.deal_cards(player2)
@@ -256,11 +253,11 @@ def main():
                 legal_moves = player_turn.legal_plays(list(spit_piles.values()))
                 print(f"Legal moves: {legal_moves}")
 
-                card_choice = input("Choose the card pile to play from (1-5 or 'spit'): ")
+                card_choice = input("Choose the card pile to play from (1-5): ")
                 pile_choice = input("Choose the center spit pile to play to (1 or 2): ")
 
-                pile_key = f"pile{card_choice}" if card_choice.isdigit() else "spit"
-
+                pile_key = f"pile{card_choice}"
+                
                 if pile_key not in legal_moves:
                     print("That pile has no legal plays.")
                     continue
@@ -268,10 +265,11 @@ def main():
                 if not pile_choice.isdigit() or int(pile_choice) not in legal_moves[pile_key]:
                     print("That move is not allowed to the selected center pile.")
                     continue
+                
+                #elif legal_moves == None:
+                  #  print("Popping from spit pile.")
+                    
 
-                if pile_key == "spit":
-                    card = player_turn.spit_pile["pile"].pop()
-                    print(f"{player_turn.name} plays {card} from spit pile to center pile {pile_choice}")
                 else:
                     pile_name = f"pile{card_choice}"
                     card = player_turn.player_pile[pile_name].pop()
@@ -280,33 +278,25 @@ def main():
 
                 spit_piles[f"pile{pile_choice}"].append(card)
 
-            
-            
-            
-           # if action == "play":
-            #    legal_moves = player_turn.legal_plays(list(spit_piles.values()))
-             #   print(f"Legal moves: {legal_moves}")
-              #  pile_choice = input("Pick a pile to play from (1-2): ")
-               # card_choice = input("Pick a card to play (1-5): ")
-               # if player_turn.card_playable(card_choice, pile_choice):
-               #     spit_piles[pile_choice].append(player_turn.player_pile\
-                #                                   [card_choice].pop())
-                    #Check that last one lowk
             elif action == "slap":
-                if len(player_turn.values()) == 0:
+                if len(player_turn.all_values()) == 0:
                     print("Pick a pile to slap: ")
                     print(len(spit_piles["pile1"]))
                     print(len(spit_piles["pile2"]))
                     pile_choice = input("Choose a pile (1 or 2): ")
                     if pile_choice == "1":
                         deck.cards.extend(spit_piles["pile1"])
+                        deck.shuffle()
                         deck.deal_cards(player_turn)
                         deck.cards.extend(spit_piles["pile2"])
+                        deck.shuffle()
                         deck.deal_cards(other_player)
                     elif pile_choice == "2":
                         deck.cards.extend(spit_piles["pile2"])
+                        deck.shuffle()
                         deck.deal_cards(player_turn)
                         deck.cards.extend(spit_piles["pile1"])
+                        deck.shuffle()
                         deck.deal_cards(other_player)
                 else:
                     print("You cannot slap now.")
@@ -318,10 +308,30 @@ def main():
         except ValueError:
             print("Invalid action. Please type 'play', 'slap', or 'skip'.")
             continue
-            
-        #if len(player_turn.values()) <= 15:
+        except TypeError:
+            continue
+        
+        for pile in player_turn.player_pile.values():
+            if len(pile) == 0:
+                print(f"Pile {player_turn.name} has no cards in the pile, moving card over")
+                move_empty_pile(player_turn)
+            else:
+                pass
+                
+        for pile in other_player.player_pile.values():
+            if len(pile) == 0:
+                print(f"Pile {other_player.name} has no cards in the pile, moving card over")
+                move_empty_pile(other_player)
+            else:
+                pass
+        
+        if player_turn.legal_plays(list(spit_piles.values())) == False \
+                    and other_player.legal_plays(list(spit_piles.values())) == False:
+                    print("Neither player has a legal play, pulling from your spit pile.")
+                    spit_piles["pile1"].append(other_player.spit_pile["pile"].pop())    
+        #if len(player_turn.all_values()) <= 15:
            # change_gamestate(player_turn)
-        #if len(other_player.values()) <= 15:
+        #if len(other_player.all_values()) <= 15:
             #change_gamestate(other_player)
         # Revise change_gamestate
         turn += 1
@@ -384,8 +394,27 @@ def title_screen():
     ax.get_yaxis().set_visible(False)
     return plt.show()                 
 
+def parse_args(arglist):
+    """Parse command-line arguments.
     
+    Expect two player names as arguments.
+
+    Args:
+        arglist (list of str): arguments from the command line.
+    
+    Returns:
+        namespace: the parsed arguments, as a namespace.
+    """
+    parser = ArgumentParser()
+    parser.add_argument("--player1", default="Player 1", help="Name of player 1 (default: Player 1)")
+    parser.add_argument("--player2", default="Player 2", help="Name of player 2 (default: Player 2)")
+    return parser.parse_args(arglist)
+
+ 
     
 if __name__ == "__main__":
+    args = parse_args(sys.argv[1:])
+    player1 = Player(args.player1)
+    player2 = Player(args.player2)
     title_screen()
-    main()
+    main(player1, player2)
