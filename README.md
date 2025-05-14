@@ -11,7 +11,12 @@ Split is a game where you try to lose all your cards. You lose cards by adding a
 | -------- | ------ | ----------|
 | card_playable | Isabella | conditional expression |
 | card_to_center | Isabella | f-string |
-| __repr__ | Josue | magic method other than __init__ |
+| `__repr__` | Josue | magic method other than `__init__` |
 |with open('cards.json', 'r') as file | Jose | Json Dumping|
 | title_screen | Hong | visualizing data with pyplot
 
+## Resources Used
+| Author | Resource (Link) | Reason for Use |
+| ------ | --------------- | -------------- |
+| Hong | [Statology](https://www.statology.org/matplotlib-rectangle/) | How to make basic rectangles using pyplot
+| Hong | [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/) | Basics of Markdown
