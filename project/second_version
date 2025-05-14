@@ -172,7 +172,7 @@ def move_empty_pile(player):
     is_empty = False
     if response == "yes" or response == "y":
         for pile in player.player_pile: #check if piles are empty
-            if player.player_pile[pile] == []
+            if player.player_pile[pile] == []:
                 check_empty.append(True)
                 is_empty = True
             else:
