@@ -111,6 +111,11 @@ class Player:
    
     #face_up_cards method
     def face_up_cards(self):
+        """Gets the face-up card from from the player pile and spit pile.
+
+        Returns:
+            dict: A dictionary mapping pile names to the top card in each pile. 
+        """
         face_up = {}
         for pile_name, pile in self.player_pile.items():
             if pile:  # non-empty pile
