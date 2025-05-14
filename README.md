@@ -1,7 +1,7 @@
 # Split
 ~*by Saucy Syntax Squad*~
 
-Split is a game where you try to lose all your cards. You lose cards by adding a number above or below the stock pile where both players are allowed to use. 
+Spit is a game where you try to lose all your cards. You lose cards by adding a number above or below the stock pile where both players are allowed to use. 
 
 ## How to Play 
 
