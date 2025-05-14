@@ -197,23 +197,51 @@ class Player:
     
     #flip_next_card method Hong
     def flip_next_card(self):
+        """Flips the next card from each pile, if possible.
+        
+        Returns:
+            None
+        """
         next_cards = []
-        for piles in self.player_piles:
-            next_cards.append(self.player_piles[piles].cards.pop(0))
+        for pile_name, pile in self.player_pile.items():
+            if pile:
+                next_cards.append(pile[-1])  
         print(f"Next Cards: {next_cards}")
         
     #win method
-    def win_condition(player):
-        for cards in player.values():
+    def win_condition(self):
+        """Checks if the player has won. A player wins if they have no more 
+        cards left.
+
+        Args:
+            self (player): the player whose piles are being checked if they're 
+            empty or not.
+
+        Returns:
+            bool: True if all piles are empty (AKA the player won)
+        """
+        for cards in self.player_pile.values():
             if cards:
-                print("You are not the winner!")
                 return False 
-            else:
-                print("You are the winner!")
-                return True
+        if self.spit_pile["pile"]:
+            return False
+        
+        print("You are the winner!")
+        return True
         
                         
 def main():
+    """The main game loop for the spit card game.
+    
+    Args:
+        player1 (Player): the first player.
+        player2 (Player): the second player.
+    
+
+    Raises:
+        ValueError: When the player enters an invalid action.
+        TypeError: When there is no empty pile when moving a card.
+    """
     deck = Deck()
     deck.shuffle()
     
