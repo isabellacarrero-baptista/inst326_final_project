@@ -20,10 +20,11 @@ Make sure you are in `inst326_final_project\project`
 | card_playable | Isabella | conditional expression |
 | card_to_center | Isabella | f-string |
 | `__repr__` | Josue | magic method other than `__init__` |
-|with open('cards.json', 'r') as file | Jose | Json Dumping |
+| with open('cards.json', 'r') as file | Jose | Json Dumping |
 | title_screen | Hong | visualizing data with pyplot |
-|parse_args | Ethan | ArgumentParser class|
-|main | Ethan | optional parameters|
+| move_empty_pile | Hong | conditional expression |
+| parse_args | Ethan | ArgumentParser class|
+| main | Ethan | optional parameters|
 
 ## Resources Used
 | Author | Resource (Link) | Reason for Use |
@@ -32,6 +33,4 @@ Make sure you are in `inst326_final_project\project`
 | Hong | [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/) | Basics of Markdown
 | Isabella | [Spit rules video](https://www.youtube.com/watch?v=_Q2HuDtdkrY)| Screenshots for presentation
 | Isabella | [Spit rules](https://bicyclecards.com/how-to-play/spit)| Rules of spit |
-|Isabella| [Spit rules video](https://www.youtube.com/watch?v=_Q2HuDtdkrY)| Screenshots for presentation
-|Isabella| [Spit rules](https://bicyclecards.com/how-to-play/spit)| Rules of spit
 
