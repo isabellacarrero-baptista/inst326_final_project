@@ -9,7 +9,8 @@ You write in command terminal
 >`python3 second_version.py` if using mac.
 
 then you play the game by choosing the actions mentioned! <br>
-We expect a text / string based input with some examples including 'play', 'slap', 'skip'. 
+We expect a text / string based input with some examples including 'play', 'slap', 'skip'. <br>
+Also an integar input regarding the card pile and spit pile.
 
 Make sure you are in `inst326_final_project\project`
 
@@ -28,5 +29,5 @@ Make sure you are in `inst326_final_project\project`
 | ------ | --------------- | -------------- |
 | Hong | [Statology](https://www.statology.org/matplotlib-rectangle/) | How to make basic rectangles using pyplot
 | Hong | [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/) | Basics of Markdown
-|Isabella| [Spit rules video](https://www.youtube.com/watch?v=_Q2HuDtdkrY)| Screenshots for presentation
-|Isabella| [Spit rules](https://bicyclecards.com/how-to-play/spit)| Rules of spit
+| Isabella | [Spit rules video](https://www.youtube.com/watch?v=_Q2HuDtdkrY)| Screenshots for presentation
+| Isabella | [Spit rules](https://bicyclecards.com/how-to-play/spit)| Rules of spit |
