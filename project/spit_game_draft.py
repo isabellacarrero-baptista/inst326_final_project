@@ -8,23 +8,52 @@ with open('cards.json', 'r') as file:
     cards_data = json.load(file)
 
 class Card:
+    """Represents a playing card.
+    
+    Author: Josue Miguel
+
+    Attributes:
+        rank (str): The rank of the card (e.g., "Ace", "2", "King").
+        suit (str): The suit of the card (e.g., "Spades", "Hearts", ect)
+    """
     rank_values = cards_data["ranks"]  
 
 
     def __init__(self, rank, suit):
+        """Initializes a Card object with a rank and a suit.
+
+        Args:
+            rank (str): The rank of the card.
+            suit (str): The suit of the card.
+        """
         self.rank = rank
         self.suit = suit
 
 
     def __repr__(self):
+        """Returns a string representation of the card.
+
+        Returns:
+            str: A string in the format 'rank of suit' (e.g., 'Ace of Spades').
+        """
         return f"{self.rank} of {self.suit}"
 
 
     def value(self):
+        """Returns the numerical value of the card based on its rank.
+
+        Returns:
+            int: The numerical value of the card (e.g., 'Ace' it would return 1)
+        """
         return Card.rank_values[self.rank]
 
 
     def __str__(self):
+        """Returns a string representation of the card with suit symbols.
+
+        Returns:
+            str: A string in the format with suit symbols (e.g., 'Ace of ♠')
+        """
         suit_symbols = {
             "Spades": "\u2660",     # ♠
             "Hearts": "\u2665",     # ♥
@@ -35,6 +64,7 @@ class Card:
 
 
 class Deck:
+    
     def __init__(self):
         self.cards = []
         for rank in cards_data["ranks"]:

@@ -158,6 +158,11 @@ class Player:
         self.spit_pile = {"pile": []}
 
     def values(self):
+        '''Returns a list of all card values in the player's piles.
+
+        Returns:
+            list: A list of all card values in the player's piles.
+        '''
         all_cards = []
         for pile in self.player_pile.values():
             all_cards.extend(pile)
@@ -197,6 +202,11 @@ class Player:
    
     #face_up_cards method
     def face_up_cards(self):
+        """Gets the face-up card from from the player pile and spit pile.
+
+        Returns:
+            dict: A dictionary mapping pile names to the top card in each pile.  
+        """
         face_up = {}
         for pile_name, pile in self.player_pile.items():
             if pile:  # non-empty pile
@@ -208,6 +218,16 @@ class Player:
     #Isabella code for Player class:
     
     def card_playable(self, card, center_spitpile_card):
+        """Checks if the card can be played on the center spit pile. 
+        Uses conditional expression technique. 
+
+        Args:
+            card (Card): The player's card that can be played.
+            center_spitpile_card (Card): The top card on the center spit pile.
+
+        Returns:
+            bool: True if the card can be played, False if it can't.
+        """
         return (
             abs(card.value() - center_spitpile_card.value()) == 1 or
             (card.value() == 1 and center_spitpile_card.value() == 13) or 
@@ -216,6 +236,16 @@ class Player:
         
             
     def legal_plays(self, center_spit_piles):
+        """All the legal moves a player can make. Checks the player's cards 
+        against the center spit piles.
+
+        Args:
+            center_spit_piles (list): A list of two lists for each center spit
+            pile.
+
+        Returns:
+            dictionary: dictionary of legal plays.
+        """
         legal_plays_dict = {}
         face_up = self.face_up_cards()
 
@@ -231,6 +261,16 @@ class Player:
         return legal_plays_dict
     
     def card_to_center(self, center_piles):
+        """Attempts to play one legal card to a center spit pile.
+        Uses f-sting technique.
+
+        Args:
+            center_piles (list): A list of two lists for each center spit
+            pile.
+
+        Returns:
+            bool: True if a card was played, False if it wasn't.
+        """
         face_up = self.face_up_cards()
       
         for pile, card in face_up.items():
@@ -247,9 +287,30 @@ class Player:
     #flip_next_card method 
     def flip_next_card(self):
         next_cards = []
-        for piles in self.player_pile:
-            next_cards.append(self.player_pile[piles].cards.pop())
+        for pile_name, pile in self.player_pile.items():
+            if pile:
+                next_cards.append(pile[-1])  
         print(f"Next Cards: {next_cards}")
+    
+    def win_condition(self):
+        """Checks if the player has won. A player wins if they have no more 
+        cards left.
+
+        Args:
+            self (player): the player whose piles are being checked if they're 
+            empty or not.
+
+        Returns:
+            bool: True if all piles are empty (AKA the player won)
+        """
+        for cards in self.player_pile.values():
+            if cards:
+                return False 
+        if self.spit_pile["pile"]:
+            return False
+        
+        print("You are the winner!")
+        return True
     
         
 def move_empty_pile(player):
@@ -346,10 +407,11 @@ def main(player1, player2):
         
         player_turn.show_player_unicode_piles()
         print('\n')
-        print(f"Middle spit pile 1: {spit_piles["pile1"]}")
-        print(f"Middlepit pile 2: {spit_piles["pile2"]}")
+        if spit_piles['pile1']:
+            print(f"Middle spit pile 1: {spit_piles['pile1'][-1]}")  # Top card of pile1
+        if spit_piles['pile2']:
+            print(f"Middle spit pile 2: {spit_piles['pile2'][-1]}")  # Top card of pile2
         print('\n')
-        try:
             action = input("Choose an action: 'play', 'slap', or 'skip': ")
             action = action.lower()
             
