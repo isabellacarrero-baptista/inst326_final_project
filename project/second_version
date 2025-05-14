@@ -316,10 +316,11 @@ def main(player1, player2):
         
         player_turn.show_player_unicode_piles()
         print('\n')
-        print(f"Middle spit pile 1: {spit_piles["pile1"]}")
-        print(f"Middlepit pile 2: {spit_piles["pile2"]}")
+        if spit_piles['pile1']:
+            print(f"Middle spit pile 1: {spit_piles['pile1'][-1]}")  # Top card of pile1
+        if spit_piles['pile2']:
+            print(f"Middle spit pile 2: {spit_piles['pile2'][-1]}")  # Top card of pile2
         print('\n')
-        try:
             action = input("Choose an action: 'play', 'slap', or 'skip': ")
             action = action.lower()
             
