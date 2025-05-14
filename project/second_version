@@ -177,9 +177,6 @@ def move_empty_pile(player):
                 is_empty = True
             else:
                 check_empty.append(False)
-
-        if not is_empty == True: #there is not an empty pile
-            raise TypeError("There must be a empty pile.")
         
         if not is_empty == True: #there is not an empty pile
             raise TypeError("There must be a empty pile.")
